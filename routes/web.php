@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\MainAdminController;
 use App\Http\Controllers\Admin\MenuAdminController;
 use App\Http\Controllers\Admin\CourseAdminController;
 use App\Http\Controllers\Admin\CustomerAdminController;
+use App\Http\Controllers\MainController;
 
 Route::get('admin/users/login', [LoginController::class, 'index'])->name('login');
 Route::post('admin/users/login/store', [LoginController::class, 'store']);
@@ -48,3 +49,7 @@ Route::middleware('auth')->group(function () {
 
     });
 });
+
+Route::get('/', [MainController::class, 'index']);
+Route::get('export', [MainController::class, 'export']);
+Route::post('import', [MainController::class, 'import']);
