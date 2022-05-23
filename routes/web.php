@@ -37,14 +37,14 @@ Route::middleware('auth')->group(function () {
         });
 
         #Menu
-        Route::prefix('menus')->group(function () {
-            Route::get('add', [MenuAdminController::class, 'create']);
-            Route::post('add', [MenuAdminController::class, 'store']);
-            Route::get('list', [MenuAdminController::class, 'index']);
-            Route::get('add/{menu}', [MenuAdminController::class, 'show']);
-            Route::post('add/{menu}', [MenuAdminController::class, 'store']);
-            Route::DELETE('delete/{menu}', [MenuAdminController::class, 'delete']);
-        });
+//        Route::prefix('menus')->group(function () {
+//            Route::get('add', [MenuAdminController::class, 'create']);
+//            Route::post('add', [MenuAdminController::class, 'store']);
+//            Route::get('list', [MenuAdminController::class, 'index']);
+//            Route::get('add/{menu}', [MenuAdminController::class, 'show']);
+//            Route::post('add/{menu}', [MenuAdminController::class, 'store']);
+//            Route::DELETE('delete/{menu}', [MenuAdminController::class, 'delete']);
+//        });
 
     });
 });
