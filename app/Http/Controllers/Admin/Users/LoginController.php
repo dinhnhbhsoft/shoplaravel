@@ -8,13 +8,15 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         return view('admin.users.login', [
             'title' => "Login"
         ]);
     }
 
-    public function store(StorePostRequest $request) {
+    public function store(StorePostRequest $request)
+    {
         $data = [
             'email' => $request->input('email'),
             'password' => $request->input('password'),

@@ -15,19 +15,25 @@ class CustomerAdminController extends Controller
     protected $courseAdminServices;
     protected $customerAdminServices;
 
-    public function __construct(CustomerAdminServices $customerAdminServices, CourseAdminServices $courseAdminServices) {
+    public function __construct(
+        CustomerAdminServices $customerAdminServices,
+        CourseAdminServices $courseAdminServices
+    )
+    {
         $this->courseAdminServices = $courseAdminServices;
         $this->customerAdminServices = $customerAdminServices;
     }
 
-    public function create() {
+    public function create()
+    {
         return view('admin/customer/add', [
             'title' => 'Add customer',
             'courses' => $this->courseAdminServices->getCourse(),
         ]);
     }
 
-    public function store(FormPostRequests $request, Customer $customer) {
+    public function store(FormPostRequests $request, Customer $customer)
+    {
         $url = $this->customerAdminServices->saveImg($request);
         if ($url !== false) {
             $this->customerAdminServices->store($request, $customer, $url);
@@ -35,14 +41,16 @@ class CustomerAdminController extends Controller
         return redirect()->back();
     }
 
-    public function index() {
+    public function index()
+    {
         return view('admin/customer/list', [
             'title' => 'List customer',
             'customers' => $this->customerAdminServices->getCustomer(),
         ]);
     }
 
-    public function show(Customer $customer) {
+    public function show(Customer $customer)
+    {
         return view('admin/customer/add', [
             'title' => 'Edit customer',
             'customer' => $customer,
@@ -50,7 +58,8 @@ class CustomerAdminController extends Controller
         ]);
     }
 
-    public function delete(Request $request) {
+    public function delete(Request $request)
+    {
         $this->customerAdminServices->delete($request);
         return response()->json([
             'ok' => 'ok',

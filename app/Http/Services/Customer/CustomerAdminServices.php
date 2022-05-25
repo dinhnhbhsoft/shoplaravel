@@ -2,12 +2,16 @@
 
 namespace App\Http\Services\Customer;
 
+use App\Mail\CustomerEmail;
 use App\Models\Customer;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 
 class CustomerAdminServices {
-    public function saveImg($request) {
+    public function saveImg($request)
+    {
         if ($request->hasFile('avatar')) {
             try {
                 $name = $request->file('avatar')->getClientOriginalName();
@@ -27,12 +31,20 @@ class CustomerAdminServices {
         }
     }
 
-    public function store($request, $customer, $url) {
+    public function sendMail($request)
+    {
+        $customer = $request->input();
+        Mail::to($customer['email'])->send(new CustomerEmail($customer));
+    }
+
+    public function store($request, $customer, $url)
+    {
         $data = $request->input();
         $course_ids = $request->input('courses');
+        $id = $customer->getAttribute('id');
 
         try {
-            if($customer->getAttribute('id') !== null) {
+            if ($id !== null) {
                 if($url !== "") {
                     File::delete($customer->avatar);
                     $data = array_merge($data, ['avatar' => $url]);
@@ -40,11 +52,17 @@ class CustomerAdminServices {
                 $customer->courses()->detach();
                 $customer->courses()->attach($course_ids);
 
+                if ($customer->getAttribute('email') !== $request->input('email')) {
+                    $this->sendMail($request);
+                }
+
                 $customer->fill($data);
                 $customer->save();
                 Session::flash('success', 'You edited Customer');
 
             } else {
+                $this->sendMail($request);
+
                 $data = array_merge($data, ['avatar' => $url]);
                 Customer::create($data);
                 Session::flash('success', 'You created Customer');
@@ -57,17 +75,20 @@ class CustomerAdminServices {
             Session::flash('error', $err->getMessage());
             return false;
         }
+        return true;
     }
 
-    public function getCustomer() {
+    public function getCustomer()
+    {
         return Customer::orderbyDesc('id')->paginate(20);
     }
 
-    public function delete($request) {
+    public function delete($request)
+    {
         try {
             $id = $request->get('id');
             $customer = Customer::where('id', $id)->first();
-            if($customer) {
+            if ($customer) {
                 File::delete($customer->avatar);
                 $customer->delete();
                 Session::flash('success', 'You deleted');
@@ -78,6 +99,4 @@ class CustomerAdminServices {
         }
         return true;
     }
-
-
 }

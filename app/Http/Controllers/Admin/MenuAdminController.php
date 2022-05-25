@@ -12,30 +12,35 @@ class MenuAdminController extends Controller
 {
     protected $menuAdminServices;
 
-    public function __construct(MenuAdminServices $menuAdminServices) {
+    public function __construct(MenuAdminServices $menuAdminServices)
+    {
         $this->menuAdminServices = $menuAdminServices;
     }
 
-    public function create() {
+    public function create()
+    {
         return view('admin.menu.add', [
             'title' => 'add menu',
             'menus' => $this->menuAdminServices->getParent()
         ]);
     }
 
-    public function store(FormPostRequests $request, Menu $menu) {
+    public function store(FormPostRequests $request, Menu $menu)
+    {
         $this->menuAdminServices->store($request, $menu);
         return redirect()->back();
     }
 
-    public function index() {
+    public function index()
+    {
         return view('admin.menu.list', [
             'title' => 'list menu',
             'menus' => $this->menuAdminServices->getAll(),
         ]);
     }
 
-    public function show(Menu $menu) {
+    public function show(Menu $menu)
+    {
         return view('admin/menu/add', [
             'title' => 'edit menu',
             'menu' => $menu,
@@ -43,7 +48,7 @@ class MenuAdminController extends Controller
         ]);
     }
 
-    public function delete(Request $request): \Illuminate\Http\JsonResponse
+    public function delete(Request $request)
     {
         $this->menuAdminServices->delete($request);
         return response()->json([

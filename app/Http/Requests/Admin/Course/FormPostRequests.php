@@ -23,8 +23,9 @@ class FormPostRequests extends FormRequest
      */
     public function rules()
     {
+        $id = isset($this->course->id) ? $this->course->id : "";
         return [
-            'name' => 'required',
+            'name' => ['required', 'unique:courses,name,'.$id],
             'time_start' => 'required',
             'time_end' => 'required',
         ];

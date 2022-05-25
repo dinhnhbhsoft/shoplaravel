@@ -12,29 +12,34 @@ class CourseAdminController extends Controller
 {
     protected $courseAdminServices;
 
-    public function __construct(CourseAdminServices $courseAdminServices) {
+    public function __construct(CourseAdminServices $courseAdminServices)
+    {
         $this->courseAdminServices = $courseAdminServices;
     }
 
-    public function create() {
+    public function create()
+    {
         return view('admin/course/add', [
             'title' => 'Add course',
         ]);
     }
 
-    public function store(FormPostRequests $request, Course $course) {
+    public function store(FormPostRequests $request, Course $course)
+    {
         $this->courseAdminServices->store($request, $course);
         return redirect()->back();
     }
 
-    public function index() {
+    public function index()
+    {
         return view('admin/course/list', [
             'title' => 'List course',
             'courses' => $this->courseAdminServices->getCourse(),
         ]);
     }
 
-    public function show(Course $course) {
+    public function show(Course $course)
+    {
         return view('admin/course/add', [
             'title' => 'Edit course',
             'course' => $course,

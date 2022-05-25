@@ -24,9 +24,10 @@ class FormPostRequests extends FormRequest
 
     public function rules()
     {
+        $id = isset($this->customer->id) ? $this->customer->id : "";
         return [
             'full_name' => 'required',
-            'email' => ['required', 'regex:/^[a-z0-9]+(@abc\.abc)$/'],
+            'email' => ['required', 'email', 'unique:customers,email,'.$id],
             'birthday' => 'required',
             'phone_number' => ['required', 'regex:/^((\+84|0)(3|5|7|8|9))[0-9]{8}$/'],
             'avatar' => 'image',

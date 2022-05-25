@@ -5,8 +5,10 @@ namespace App\Http\Services\Menu;
 use App\Models\Menu;
 use Illuminate\Support\Facades\Session;
 
-class MenuAdminServices {
-    public function store($request, $menu) {
+class MenuAdminServices
+{
+    public function store($request, $menu)
+    {
         $data = [
             'name' => $request->input('name'),
             'parent_id' => $request->input('parent_id'),
@@ -16,7 +18,7 @@ class MenuAdminServices {
         ];
 
         try {
-            if($menu->getAttribute('id') !== null) {
+            if ($menu->getAttribute('id') !== null) {
                 $menu->fill($data);
                 $menu->save();
                 Session::flash('success', 'You updated Menu');

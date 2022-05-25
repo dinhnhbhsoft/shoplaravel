@@ -12,6 +12,7 @@
             Import Export Excel to Courses
         </div>
         <div class="card-body">
+            @include('admin.alert')
             <form action="/import" method="POST" enctype="multipart/form-data">
                 @csrf
                 <input type="file" name="file" class="form-control">

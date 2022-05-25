@@ -6,7 +6,8 @@ use App\Models\Course;
 use Illuminate\Support\Facades\Session;
 
 class CourseAdminServices {
-    public function store($request, $course) {
+    public function store($request, $course)
+    {
         $data = [
             'name' => $request->input('name'),
             'description' => $request->input('description') ? $request->input('description') : "",
@@ -15,7 +16,7 @@ class CourseAdminServices {
         ];
 
         try {
-            if($course->getAttribute('id') !== null) {
+            if ($course->getAttribute('id') !== null) {
                 $course->fill($data);
                 $course->save();
                 Session::flash('success', 'You updated Course');
@@ -31,15 +32,17 @@ class CourseAdminServices {
         return true;
     }
 
-    public function getCourse() {
+    public function getCourse()
+    {
         return Course::orderbyDesc('id')->paginate(20);
     }
 
-    public function delete($request) {
+    public function delete($request)
+    {
         try {
             $id = $request->get('id');
             $course = Course::where('id', $id)->first();
-            if($course) {
+            if ($course) {
                 $course->delete();
                 Session::flash('success', 'You deleted');
             }
