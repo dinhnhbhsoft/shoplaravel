@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Customer\FormPostRequests;
 use App\Http\Services\Course\CourseAdminServices;
 use App\Http\Services\Customer\CustomerAdminServices;
-use App\Models\Course;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 

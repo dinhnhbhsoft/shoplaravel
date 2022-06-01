@@ -134,6 +134,10 @@ return [
     |
     */
 
+    'paginate' => [
+        'per_page' => 5,
+    ],
+
     'providers' => [
 
         /*
